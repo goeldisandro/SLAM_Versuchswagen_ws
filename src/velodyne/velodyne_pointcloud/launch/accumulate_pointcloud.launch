@@ -1,0 +1,30 @@
+<launch>
+    <arg name="out_cloud" default="velodyne_points_accumulated"/>
+    <arg name="use_nodelet" default="false"/>
+
+    <arg name="nodelet_manager" default="velodyne_nodelet_manager"/>
+    <arg name="calibration" default="$(find velodyne_pointcloud)/params/VLP16db.yaml"/>
+    <arg name="max_range" default="130.0"/>
+    <arg name="min_range" default="0.4"/>
+    <arg name="n_accumulated_packets" default="75"/>
+
+    <node if="$(arg use_nodelet)" name="accumulate_pointcloud_nodelet" pkg="nodelet" type="nodelet"
+          args="load velodyne_pointcloud/CloudNodelet $(arg nodelet_manager)">
+      <remap from="velodyne_points" to="$(arg out_cloud)"/>
+      <param name="calibration" value="$(arg calibration)"/>
+      <param name="max_range" value="$(arg max_range)"/>
+      <param name="min_range" value="$(arg min_range)"/>
+      <param name="n_accumulated_packets" value="$(arg n_accumulated_packets)"/>
+    </node>
+
+    <node unless="$(arg use_nodelet)" name="accumulate_pointcloud_node" pkg="velodyne_pointcloud" type="cloud_node">
+      <remap from="velodyne_points" to="$(arg out_cloud)"/>
+      <param name="calibration" value="$(arg calibration)"/>
+      <param name="max_range" value="$(arg max_range)"/>
+      <param name="min_range" value="$(arg min_range)"/>
+      <param name="n_accumulated_packets" value="$(arg n_accumulated_packets)"/>
+    </node>
+
+</launch>
+
+

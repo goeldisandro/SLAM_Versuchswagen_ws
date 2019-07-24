@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+    <arg name="subscans" value="true" />
+  </include>
+
+  <include file="$(find reccord_bag)/launch/pointcloud_to_laserscan.launch">
+  </include>
+
+  <include file="$(find reccord_bag)/launch/gps.launch">
+  </include>  
+
+<!--  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find odom_markers)/rviz/rviz_velodyne_odom_conf.rviz"/>-->
+
+</launch>
+
+

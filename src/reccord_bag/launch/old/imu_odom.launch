@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <machine name="beaglebone" address="192.168.7.2" user="debian" password="temppwd">
+  </machine>
+
+  <node machine="beaglebone" name="imu_odom_node" pkg="imu_odom" type="imu_odom_node" />
+
+</launch>
+
+

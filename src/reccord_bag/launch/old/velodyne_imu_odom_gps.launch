@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+  </include>
+
+  <include file="$(find reccord_bag)/launch/gps.launch">
+  </include>  
+
+  <node pkg="reccord_bag" type="mpu6050_serial_to_imu_node" name="mpu6050_serial_to_imu_node" required="true" output="screen">
+    <param name="port" value="/dev/ttyACM0"/>
+  </node>
+
+  <node pkg="reccord_bag" type="odom_node" name="odom_node" required="true">
+    <param name="port" value="/dev/ttyACM1"/>
+  </node>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find odom_markers)/rviz/rviz_velodyne_odom_conf.rviz"/>
+
+</launch>
+
+

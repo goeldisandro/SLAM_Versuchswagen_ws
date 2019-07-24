@@ -1,0 +1,83 @@
+<!---->
+
+<robot name="ba_roboter">
+  <material name="orange">
+    <color rgba="1.0 0.5 0.2 1" />
+  </material>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      <geometry>
+        <box size="0.7 0.1 0.1" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+  <link name="velodyne">
+    <visual>
+      <origin  xyz="0.0 0.0 0.0" />
+      <geometry>
+        <box size="0.5 0.1 0.1" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+  <link name="imu_link">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <box size="0.1 0.2 0.1" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+  <link name="z_up_link">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <box size="0.0 0.0 0.0" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+  <link name="gps">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" />
+      <geometry>
+        <box size="0.0 0.0 0.0" />
+      </geometry>
+      <material name="orange" />
+    </visual>
+  </link>
+
+  <joint name="velodyne_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="velodyne" />
+    <origin xyz="0 0 0.5 " rpy="0.0 0.0 -2.00712863979" />
+  </joint>
+
+  <joint name="z_up_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="z_up_link" />
+    <origin xyz="0 0 0" rpy="0.0 0.0 0.0"/>
+  </joint>
+  
+  <joint name="imu_joint" type="fixed">
+    <parent link="z_up_link" />
+    <child link="imu_link" />
+    <origin xyz="0 0 0" rpy="1.60816 0.0 0.0"/>
+  </joint>
+
+  <joint name="gps_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="gps" />
+    <origin xyz="0 0 0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+
+</robot>

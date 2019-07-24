@@ -1,0 +1,32 @@
+<launch>
+  <param name="/use_sim_time" value="true" />
+  <param name="robot_description" textfile="$(find cartographer_ros)/urdf/versuchswagen.urdf" />
+
+<!--  <node pkg="rosbag" type="record" name="rosbag_record" respawn="true" output="screen" args="-o $(find reccord_bag)/bagfiles/ velodyne_points imu odom /gps/fix rp_scan"/>-->
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+    type="robot_state_publisher" />
+
+  <node name="cartographer_node" pkg="cartographer_ros" type="cartographer_node" args="
+        -configuration_directory $(find cartographer_ros)/configuration_files/outdoor
+        -configuration_basename top_file.lua"
+    output="screen">
+    <remap from="points2" to="velodyne_points" />
+    <remap from="scan" to="to_scan" />
+    <remap from="fix" to="gps/fix" />
+  </node>
+
+  <node name="playbag" pkg="rosbag" type="play"
+      args="--clock $(arg bag_filename)" />
+
+
+  <node name="rviz" pkg="rviz" type="rviz" required="true"
+      args="-d $(find cartographer_ros)/configuration_files/cartographer_conf.rviz" />
+
+
+</launch>
+
+<!--	  -load_state_filename $(arg load_state_filename)-->
+
+<!--  <node name="playbag" pkg="rosbag" type="play"-->
+<!--      args="- -clock $(arg bag_filename)" />-->

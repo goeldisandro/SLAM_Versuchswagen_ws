@@ -1,0 +1,27 @@
+<launch>
+  <arg name="pbstream_file" default="some_file.pbstream"/>
+  <arg name="configuration_file" default="turtlebot_vlp16_scan_2d_localisation.lua"/>
+  <arg name="initial_x" default="0.0"/>
+  <arg name="initial_y" default="0.0"/>
+  <arg name="initial_a" default="0.0"/>
+  <arg name="initial_pose" default="translation={$(arg initial_x), $(arg initial_y),0.0},rotation={0.0,0.0, $(arg initial_a)}"/>
+
+  <param name="/use_sim_time" value="true" />
+  <param name="robot_description" textfile="$(find cartographer_ros)/urdf/versuchswagen.urdf" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <node name="cartographer_start_trajectory" pkg="cartographer_ros" type="cartographer_start_trajectory" args="
+	-configuration_directory $(find cartographer_ros)/configuration_files/indoor
+        -configuration_basename top_file.lua
+        -initial_pose='{ to_trajectory_id=0, relative_pose={$(arg initial_pose) }}'"
+        output="screen">
+    <remap from="points2" to="velodyne_points" />
+    <remap from="scan" to="to_scan" />
+    <remap from="fix" to="gps/fix" />
+  </node>
+
+  <node name="playbag" pkg="rosbag" type="play"
+      args="--clock $(arg bag_filename)" />
+
+</launch>
