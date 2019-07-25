@@ -21,7 +21,7 @@
     <remap from="fix" to="gps/fix" />
   </node>
 
-  <node name="playbag" pkg="rosbag" type="play"
-      args="--clock $(arg bag_filename)" />
+<!--  <node name="playbag" pkg="rosbag" type="play"
+      args="--clock $(arg bag_filename)" /> -->
 
 </launch>
