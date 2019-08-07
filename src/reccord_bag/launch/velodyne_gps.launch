@@ -1,0 +1,12 @@
+<launch>
+  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+    <arg name="subscans" value="true" />
+  </include>
+
+  <include file="$(find reccord_bag)/launch/gps.launch">
+  </include>  
+
+
+
+</launch>
+
